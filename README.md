@@ -1,2 +1,2 @@
-# nethserver-linux-dash-
-a module to install linux-dash
+# nethserver-linux-dash
+a Module of linux-dash for nethserver

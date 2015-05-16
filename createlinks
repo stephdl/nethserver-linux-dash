@@ -1,0 +1,14 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks  qw(:all);
+
+
+my $event = "nethserver-linux-dash-update";
+event_actions($event,
+'initialize-default-databases' => '00',
+'nethserver-linux-dash-conf' => '20');
+
+# Templates to expand
+templates2events("/etc/httpd/conf.d/linux-dash.conf", $event);
+templates2events("/etc/httpd/conf/httpd.conf", $event);
+event_services($event, 'httpd' => 'reload');

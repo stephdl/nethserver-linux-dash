@@ -1,0 +1,15 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Errno;
+
+if ( ! -d '/usr/share/linux-dash') {
+    system ('git clone https://github.com/afaqurk/linux-dash.git /usr/share/linux-dash >/dev/null 2>&1') == '0' 
+                              || warn "error can't retrieve linux-dash : $!";
+}
+
+else {
+    system ('git --git-dir=/usr/share/linux-dash/.git pull origin master >/dev/null 2>&1') == '0'
+                              || warn "error can't retrieve linux-dash : $!";
+}
+

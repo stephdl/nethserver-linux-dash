@@ -1,0 +1,44 @@
+{
+
+if ((${'linux-dash'}{'status'} || 'enabled') eq 'enabled'){
+
+    my $name  = ${'linux-dash'}{'Name'} || 'linux-dash';
+    my $allow = ((${'linux-dash'}{'access'} || 'private') eq 'public') ? 'all':"$localAccess";
+
+    my @users = split(",", (${'linux-dash'}{'Users'} || "") );
+
+    $OUT .=<<"HERE";
+
+alias /$name /usr/share/linux-dash
+
+<Directory /usr/share/linux-dash>
+    AddType application/x-httpd-php .php
+    SSLRequireSSL on
+    Order deny,allow
+    Deny from all
+    Allow from $allow
+    AuthName "$name"
+    AuthType Basic
+    AuthBasicProvider external
+    AuthExternal pwauth
+
+HERE
+;
+
+    $OUT .= "    require user admin ";
+    foreach my $user (@users) 
+       {
+       $OUT .= " $user";
+       }
+
+    $OUT .="\n";
+    $OUT .=<<"HERE";
+</Directory>
+HERE
+}
+else{
+    $OUT .= "    # Linux-Dash is disabled\n";
+}
+
+}
+
